@@ -1,142 +1,70 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anasayfa</title>
+    <title>Color Wheel Project Selector</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            color: white;
             font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        .container {
             text-align: center;
+            margin-top: 50px;
         }
-        h1, h2, h3 {
-            margin: 20px 0;
-            padding: 0;
-        }
-        h2, h3 {
-            color: white;
-            font-size: 24px;
-        }
-        .transition-text {
-            font-size: 50px;
-            color: purple;
-            animation: popIn 0.5s ease forwards, blink 1.5s infinite alternate;
-        }
-        @keyframes popIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        @keyframes blink {
-            0%, 40% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-        .falling-text {
-            animation: fallIn 1s ease forwards 0.5s;
-            opacity: 0;
-        }
-        @keyframes fallIn {
-            0% {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        /* Buton stilini ekleyelim */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #512da8; /* Daha koyu bir renk seçtik */
-            padding: 15px 0;
-            text-align: center;
-            z-index: 999; /* Menünün içeriğin üstünde olmasını sağlar */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Hafif bir gölge ekledik */
-        }
-        .navigation {
-            display: flex;
-            justify-content: center;
-            list-style-type: none; /* Butonlar için varsayılan madde işaretini kaldırır */
-            padding: 0;
-            margin: 0;
-        }
-        .navigation a {
-            color: white; /* Buton metinlerini beyaz yapar */
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 12px 25px; /* Boyutları biraz daha büyüttük */
-            border-radius: 25px; /* Kenarları daha yuvarlak hale getirdik */
-            transition: background-color 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s; /* Transition efektlerini güncelledik */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Yazı tipini güncelledik */
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-        .navigation a:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background-color: rgba(255, 255, 255, 0.1);
+        .wheel {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
-            z-index: 0;
-            transform: translate(-50%, -50%);
+            position: relative;
         }
-        .navigation a:hover:before {
-            width: 0;
-            height: 0;
-            top: 50%;
-            left: 50%;
+        .wheel .color {
+            width: 100%;
+            height: 50%;
+            position: absolute;
+            clip-path: polygon(50% 50%, 100% 0, 100% 100%);
         }
-        .navigation a:hover {
-            background-color: #6a1b9a; /* Daha açık bir renk seçtik */
-            color: #ffd600; /* Sarı renk */
-            transform: translateY(-3px); /* Butonu hafifçe yukarı hareket ettirdik */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Daha belirgin bir gölge ekledik */
+        .wheel .red {
+            background-color: red;
+            transform: rotate(0deg);
+        }
+        .wheel .white {
+            background-color: white;
+            transform: rotate(120deg);
+        }
+        .wheel .black {
+            background-color: black;
+            transform: rotate(240deg);
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <!-- Navigasyon menüsü -->
-    <header>
-        <nav class="navigation">
-            <a href="index.html"> Anasayfa</a> <!-- Ev ikonu ekledik -->
-            <a href="siniflistesi.html"> Sınıf Listesi</a> <!-- Kitap ikonu ekledik -->
-            <a href="dersmufredati.html"> Ders Müfredatı</a> <!-- Kalem ikonu ekledik -->
-            <a href="blogs.html"> Blogs</a> <!-- Öğretmen ikonu ekledik -->
-        </nav>
-    </header>
-    <div class="container">
-        <h1 class="transition-text">TOBETO</h1>
-        <h2 class="falling-text">DevOps Sınıfına</h2>
-        <h3 class="falling-text">Hoş Geldiniz</h3>
+    <h1>Color Wheel Project Selector</h1>
+    <div class="wheel">
+        <div class="color red" onclick="selectColor('red')"></div>
+        <div class="color white" onclick="selectColor('white')"></div>
+        <div class="color black" onclick="selectColor('black')"></div>
     </div>
+    <div id="result"></div>
+
+    <script>
+        function selectColor(color) {
+            let result = document.getElementById('result');
+            if (color === 'black') {
+                result.textContent = 'Oyun Projesi';
+                result.style.color = 'black';
+            } else if (color === 'red') {
+                result.textContent = 'Tekne Projesi';
+                result.style.color = 'red';
+            } else if (color === 'white') {
+                result.textContent = 'Video Projesi';
+                result.style.color = 'black';
+            }
+        }
+    </script>
 </body>
 </html>
